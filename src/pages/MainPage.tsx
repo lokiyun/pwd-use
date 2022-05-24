@@ -191,13 +191,18 @@ const MainPage = () => {
       ? JSON.parse(localList)
       : []
   );
+  const [secure] = useState<string>(
+    pwdSecure && pwdSecure !== "undefined" && pwdSecure !== "null"
+    ? pwdSecure
+    : ''
+  )
 
   const handleClicBoard = (id: string) => {
     const result = pwdList.find((item) => item.id === id);
     if (!result) {
     } else {
-      const secure = result.secure
-      const bytes  = CryptoJS.AES.decrypt(secure, reverse(pwdSecure!));
+      const pwd = result.secure
+      const bytes  = CryptoJS.AES.decrypt(pwd, reverse(secure));
       const originalText = bytes.toString(CryptoJS.enc.Utf8);
       navigator.clipboard.writeText(originalText).then((res) => {
         toast.success("复制成功");
@@ -243,7 +248,7 @@ const MainPage = () => {
           id: uuidv4(),
           title,
           subTitle,
-          secure: CryptoJS.AES.encrypt(password, reverse(pwdSecure!)).toString(),
+          secure: CryptoJS.AES.encrypt(password, reverse(secure)).toString(),
           from,
           type,
           createAt: Date.now(),
@@ -281,7 +286,7 @@ const MainPage = () => {
         id: tempItem.id,
         title,
         subTitle,
-        secure: password ? CryptoJS.AES.encrypt(password, reverse(pwdSecure!)).toString() : tempItem.secure,
+        secure: password ? CryptoJS.AES.encrypt(password, reverse(secure)).toString() : tempItem.secure,
         from,
         type,
         createAt: tempItem.createAt,
@@ -328,7 +333,7 @@ const MainPage = () => {
         {pwdList.map((item) => (
           <PwdItem key={item.id}>
             <PwdTitle>{item.title}</PwdTitle>
-            <PwdSubTitle>{item.title}</PwdSubTitle>
+            <PwdSubTitle>{item.subTitle}</PwdSubTitle>
             <PwdFrom target={"_blank"} href={item.from}>
               {item.from}
             </PwdFrom>

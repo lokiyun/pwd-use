@@ -16,7 +16,7 @@ const App = () => {
     const pwdSecure = localStorage.getItem("pwdSecure");
     if (!pwdSecure) {
       const pwd = window.prompt(
-        "请保存您的密码，该密码在获取密码到剪切板时会用到!"
+        "请保存您的密码，该密码在下次登录时使用!"
       );
       if (pwd) {
         localStorage.setItem("pwdSecure", md5(pwd!));
