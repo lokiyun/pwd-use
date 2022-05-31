@@ -13,7 +13,6 @@ import { reverse } from "../utils/reverse";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
   width: 100vw;
   background-color: ${(props) => props.theme.body};
   color: ${(props) => props.theme.text};
@@ -364,7 +363,7 @@ const MainPage = () => {
             </FormItem>
             <FormItem>
               <FormLabel>密码:</FormLabel>
-              <FormInput value={password} onChange={handleChangePassword} />
+              <FormInput type={"password"} value={password} onChange={handleChangePassword} />
             </FormItem>
             <FormItem>
               <FormLabel>来源:</FormLabel>
